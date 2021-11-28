@@ -1,19 +1,21 @@
-'''Dendrite Functions¶
+"""
+Dendrite Functions¶
 
-This python file contains some helpful functions for dendrite modelling in Brian2.'''
+This python file contains some helpful functions for dendrite modelling in Brian2.
+"""
 
 # imports
 import holoviews as hv
 from brian2 import *
-from numpy import exp,sin,cos,pi
+from numpy import exp, sin, cos, pi
 import numpy as np
 import random
 hv.extension('matplotlib')
 
-# morphology functions
+
 # morphology functions
 def plotmorph(ang, N, pos, w, group='A'):
-    '''
+    """
     Plots the morphology for a 1-depth dendritic tree (the dendrites don't have sub dendrites), with inputs illustrated.
 
     This function assumes dendrite length = 100um, so you might have to do some rescaling of the lengths in 'pos'.
@@ -35,7 +37,7 @@ def plotmorph(ang, N, pos, w, group='A'):
     ------
     Holoviews.Curves object
         A simple visualization of the dendrites and the inputs
-    '''
+    """
     # add connections and color for tuning
     points = np.zeros((len(ang), 4))
     points[:, 0] = pos[0, :] - 1
@@ -61,9 +63,10 @@ def plotmorph(ang, N, pos, w, group='A'):
 
     return curves
 
+
 # input functions
 def vm(k, a1, a2):
-    '''
+    """
     Simple von mises function of the form exp(k*cos(a1-a2))/exp(k)
 
     Parameters
@@ -79,12 +82,12 @@ def vm(k, a1, a2):
     ------
     float or array
         returns exp(k*cos(a1-a2))/exp(k)
-    '''
+    """
     return exp(k * cos(a1 - a2)) / exp(k)
 
 
 def setupstimulation(N, nA, stim, p=0, kn=0.1, k=1, A=10):
-    '''
+    """
     Sets up the stimulation spiking poisson groups (for Brian2).
 
     Note: when we talk about preferred orientations in this
@@ -118,7 +121,7 @@ def setupstimulation(N, nA, stim, p=0, kn=0.1, k=1, A=10):
         Array with the average firing rates
     ang
         Array with the preferred orientations
-    '''
+    """
     # setup different preferred orientations
     ang = np.arange(-pi, pi, 2 * pi / nA)
 
@@ -145,7 +148,7 @@ def setupstimulation(N, nA, stim, p=0, kn=0.1, k=1, A=10):
 
 
 def ConnectStim(neuron, stimulation, S, pos='random'):
-    '''
+    """
     Connect the trains in the stimulation object to the structures in the neuron object
     through synapses. Note that this updates the input synapses object S.
 
@@ -165,7 +168,7 @@ def ConnectStim(neuron, stimulation, S, pos='random'):
     ------
     array
         The positions of all the inputs
-    '''
+    """
     # find relevant numbers
     nStim = len(stimulation)  # number of inputs
     nDen = len(neuron.morphology.children)  # number of dendrites
@@ -225,7 +228,7 @@ def ConnectStim(neuron, stimulation, S, pos='random'):
 
 
 def ConnectStimSimple(neuron, angid, stimulation, S, pos='random'):
-    '''
+    """
     Connect the trains in the stimulation object to the structures in the neuron object
     through synapses
 
@@ -249,7 +252,7 @@ def ConnectStimSimple(neuron, angid, stimulation, S, pos='random'):
     ------
     array
         The positions of all the inputs
-    '''
+    """
     # find relevant numbers and predefine arrays
     nStim = len(stimulation)  # number of inputs
     nDen = len(neuron.morphology.children)  # number of dendrites
